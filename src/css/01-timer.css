@@ -1,12 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .timer {
   display: flex;
 }
 
-.timer.field {
+.timer .field {
   display: flex;
   flex-direction: column;
 }
 
 .value {
-  font-size: ;
+  font-size: 40px;
+  line-height: 1.2;
 }

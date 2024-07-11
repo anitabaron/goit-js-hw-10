@@ -1,10 +1,15 @@
-// Opisany w dokumentacji
+// // Opisany w dokumentacji
+// import flatpickr from 'flatpickr';
+// // Dodatkowy import stylów
+// import 'flatpickr/dist/flatpickr.min.css';
+// // Opisany w dokumentacji
+// import iziToast from 'izitoast';
+// // Kolejny import stylów
+// import 'izitoast/dist/css/iziToast.min.css';
+
 import flatpickr from 'flatpickr';
-// Dodatkowy import stylów
 import 'flatpickr/dist/flatpickr.min.css';
-// Opisany w dokumentacji
 import iziToast from 'izitoast';
-// Kolejny import stylów
 import 'izitoast/dist/css/iziToast.min.css';
 
 function convertMs(ms) {
@@ -47,7 +52,7 @@ const flatpickr = (selector, options) => {
 };
 
 iziToast.show({
-  title: 'Hey',
+  title: '',
   message: 'Please choose a date in the future',
 });
 
@@ -55,3 +60,5 @@ const addLeadingZero = value => {
   [padStart()];
   // (< `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart` >)
 };
+
+const 
