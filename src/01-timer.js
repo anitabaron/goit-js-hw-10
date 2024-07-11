@@ -38,18 +38,20 @@ const options = {
 
 let userSelectedDate;
 
-// const flatpickr = (selector, options) => {
-//   window.alert(`Please choose a date in the future`);
-// };
+iziToast.show({
+  title: 'Alert',
+  message: 'Please choose a date in the future',
+});
 
-// iziToast.show({
-//   title: '',
-//   message: 'Please choose a date in the future',
-// });
+flatpickr('#datetime-picker', {
+  /* opcje */
+});
 
 // const addLeadingZero = value => {
 //   [padStart()];
 //   // (< `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart` >)
 // };
 
-// const btn = document.querySelector();
+const btn = document
+  .querySelector('body > section > button')
+  .addEventListener('click');
