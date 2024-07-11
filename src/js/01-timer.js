@@ -61,4 +61,4 @@ const addLeadingZero = value => {
   // (< `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart` >)
 };
 
-const 
+const btn = document.querySelector();
