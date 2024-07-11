@@ -1,12 +1,3 @@
-// // Opisany w dokumentacji
-// import flatpickr from 'flatpickr';
-// // Dodatkowy import stylów
-// import 'flatpickr/dist/flatpickr.min.css';
-// // Opisany w dokumentacji
-// import iziToast from 'izitoast';
-// // Kolejny import stylów
-// import 'izitoast/dist/css/iziToast.min.css';
-
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
