@@ -50,15 +50,21 @@ const startDate = Date.now();
 console.log(`Miliseconds UNIX date today`, { startDate });
 
 let userSelectedDate;
-let selectedDateTime;
+let selectedDateTime; // = new Date('Fri Jul 12 2024 20:51:39');
+let selectedDateTimeMilis;
 
 userSelectedDate = flatpickr('#datetime-picker', {
   enableTime: true,
   dateFormat: 'Y-m-d H:i',
   onChange: function (selectedDates, dateStr) {
-    console.log({ selectedDates });
+    console.log(`selectedDates `, selectedDates.toString());
+    console.log(`dateStr `, dateStr);
 
-    selectedDateTime = new Date(dateStr).getTime();
+    selectedDateTime = new Date(dateStr);
+    console.log(`selectedDateTime `, selectedDateTime);
+
+    selectedDateTimeMilis = selectedDateTime.getTime();
+    console.log({ selectedDateTimeMilis });
     const deltaTime = selectedDateTime - startDate;
     console.log(`Miliseconds UNIX period of time`, { deltaTime });
     console.log(`Period of time`, convertMs(deltaTime));
@@ -86,10 +92,12 @@ userSelectedDate = flatpickr('#datetime-picker', {
 
 startBtn.addEventListener(`click`, () => {});
 
-daysElement.textContent = 11; //actualDate.getDay();
-hoursElement.textContent = 22; //actualDate.getHours();
-minutesElement.textContent = 33; //actualDate.getMinutes();
-secondsElement.textContent = 44; //actualDate.getSeconds();
+const formatTime = time => time.toString().padStart(2, '0');
+
+daysElement.textContent = formatTime(actualDate.getDay());
+hoursElement.textContent = formatTime(actualDate.getHours());
+minutesElement.textContent = formatTime(actualDate.getHours());
+secondsElement.textContent = formatTime(actualDate.getHours());
 
 inputField.addEventListener('click', () => {
   userSelectedDate.open;
