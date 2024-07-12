@@ -3,6 +3,13 @@ import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+const startBtn = document.querySelector('.start-btn');
+const inputField = document.querySelector(`.input-field`);
+const daysElement = document.querySelector('[data-days]');
+const hoursElement = document.querySelector('[data-hours]');
+const minutesElement = document.querySelector('[data-minutes]');
+const secondsElement = document.querySelector('[data-seconds]');
+
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -36,46 +43,55 @@ const options = {
   },
 };
 
+const actualDate = new Date();
+console.log(actualDate);
+
 const startDate = Date.now();
-console.log(startDate);
+console.log(`Miliseconds UNIX date today`, { startDate });
 
 let userSelectedDate;
-userSelectedDate = 1799801160638;
-console.log(userSelectedDate);
+let selectedDateTime;
 
-const elapsedTime = userSelectedDate - startDate;
-console.log(elapsedTime);
-console.log(convertMs(elapsedTime));
-
-iziToast.show({
-  message: 'Please choose a date in the future',
-  color: '#ef4040',
-  messageColor: `white`,
-  position: 'topRight',
-  timeout: 8000,
-});
-
-flatpickr('#datetime-picker', {
-  enableTime: false,
+userSelectedDate = flatpickr('#datetime-picker', {
+  enableTime: true,
   dateFormat: 'Y-m-d H:i',
+  onChange: function (selectedDates, dateStr) {
+    console.log({ selectedDates });
+
+    selectedDateTime = new Date(dateStr).getTime();
+    const deltaTime = selectedDateTime - startDate;
+    console.log(`Miliseconds UNIX period of time`, { deltaTime });
+    console.log(`Period of time`, convertMs(deltaTime));
+  },
 });
 
-const checkDate =
-  elapsedTime > 0 === true ? convertMs(elapsedTime) : iziToast.show;
+// // --------------- ALERT
+// iziToast.show({
+//   message: 'Please choose a date in the future',
+//   color: '#ef4040',
+//   messageColor: `white`,
+//   position: 'topRight',
+//   timeout: 8000,
+// });
 
-console.log(checkDate);
+// const checkDate =
+//   selectedTime > 0 === true ? convertMs(deltaTime) : iziToast.show;
+
+// console.log(checkDate);
 
 // const addLeadingZero = value => {
 //   [padStart()];
 //   // (< `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart` >)
 // };
 
-const startBtn = document.querySelector('.start-btn');
-startBtn.addEventListener(`click`, () => {
-  // fpCalendar.open;
-});
+startBtn.addEventListener(`click`, () => {});
 
-const inputField = document.querySelector(`.input-field`);
+daysElement.textContent = 11; //actualDate.getDay();
+hoursElement.textContent = 22; //actualDate.getHours();
+minutesElement.textContent = 33; //actualDate.getMinutes();
+secondsElement.textContent = 44; //actualDate.getSeconds();
+
 inputField.addEventListener('click', () => {
-  // fpCalendar.open;
+  userSelectedDate.open;
+  // selectedTime = userSelectedDate.value;
 });
