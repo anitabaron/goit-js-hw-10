@@ -22,9 +22,9 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
+// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
 
 const options = {
   enableTime: true,
@@ -36,22 +36,46 @@ const options = {
   },
 };
 
+const startDate = Date.now();
+console.log(startDate);
+
 let userSelectedDate;
+userSelectedDate = 1799801160638;
+console.log(userSelectedDate);
+
+const elapsedTime = userSelectedDate - startDate;
+console.log(elapsedTime);
+console.log(convertMs(elapsedTime));
 
 iziToast.show({
-  title: 'Alert',
   message: 'Please choose a date in the future',
+  color: '#ef4040',
+  messageColor: `white`,
+  position: 'topRight',
+  timeout: 8000,
 });
 
 flatpickr('#datetime-picker', {
-  /* opcje */
+  enableTime: false,
+  dateFormat: 'Y-m-d H:i',
 });
+
+const checkDate =
+  elapsedTime > 0 === true ? convertMs(elapsedTime) : iziToast.show;
+
+console.log(checkDate);
 
 // const addLeadingZero = value => {
 //   [padStart()];
 //   // (< `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart` >)
 // };
 
-const btn = document
-  .querySelector('body > section > button')
-  .addEventListener('click');
+const startBtn = document.querySelector('.start-btn');
+startBtn.addEventListener(`click`, () => {
+  // fpCalendar.open;
+});
+
+const inputField = document.querySelector(`.input-field`);
+inputField.addEventListener('click', () => {
+  // fpCalendar.open;
+});
