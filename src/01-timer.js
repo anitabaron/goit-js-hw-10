@@ -4,102 +4,91 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const startBtn = document.querySelector('.start-btn');
-const inputField = document.querySelector(`.input-field`);
+const inputField = document.querySelector(`#datetime-picker`);
 const daysElement = document.querySelector('[data-days]');
 const hoursElement = document.querySelector('[data-hours]');
 const minutesElement = document.querySelector('[data-minutes]');
 const secondsElement = document.querySelector('[data-seconds]');
 
 function convertMs(ms) {
-  // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
 
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-
+  const days = Math.floor(ms / day); // Remaining days
+  const hours = Math.floor((ms % day) / hour); // Remaining hours
+  const minutes = Math.floor(((ms % day) % hour) / minute); // Remaining minutes
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second); // Remaining seconds
   return { days, hours, minutes, seconds };
 }
 
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+const actualDate = new Date(); // aktualna data dziś
+const startDateMilis = Date.now(); // aktualna data dziś w milisekundach
+
+let userSelectedDate;
+let deltaTime;
+let deltaTimeMilis;
+
+startBtn.disabled = true;
+startBtn.classList.remove('btn-active');
 
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  dateFormat: 'Y-m-d H:i',
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
+    userSelectedDate = selectedDates[0];
+    console.log({ userSelectedDate });
+    if (userSelectedDate <= actualDate) {
+      iziToast.error({
+        message: 'Please choose a date in the future',
+        color: '#ef4040',
+        messageColor: `white`,
+        position: 'topRight',
+        timeout: 5000,
+      });
+      startBtn.disabled = true;
+      startBtn.classList.remove('btn-active');
+      //defaults values
+      daysElement.textContent = '00';
+      hoursElement.textContent = '00';
+      minutesElement.textContent = '00';
+      secondsElement.textContent = '00';
+    } else {
+      startBtn.disabled = false;
+      startBtn.classList.add('btn-active');
+      userSelectedDate = Date.parse(selectedDates[0]);
+      deltaTimeMilis = userSelectedDate - startDateMilis;
+      deltaTime = convertMs(deltaTimeMilis);
+      console.log(deltaTime);
+      const { days, hours, minutes, seconds } = deltaTime;
+      const formatTime = time => String(time).padStart(2, '0');
+      daysElement.textContent = formatTime(days);
+      hoursElement.textContent = formatTime(hours);
+      minutesElement.textContent = formatTime(minutes);
+      secondsElement.textContent = formatTime(seconds);
+      return deltaTime;
+    }
   },
 };
 
-const actualDate = new Date();
-console.log(actualDate);
+flatpickr(inputField, options);
 
-const startDate = Date.now();
-console.log(`Miliseconds UNIX date today`, { startDate });
+// const timerInterval = setInterval(updateTimerValue, 1000);
+// updateTimerValue();
 
-let userSelectedDate;
-let selectedDateTime; // = new Date('Fri Jul 12 2024 20:51:39');
-let selectedDateTimeMilis;
+function startTimer(deltaTime) {
+  const { days, hours, minutes, seconds } = deltaTime;
+  console.log(deltaTime); // dlaczego undef? Zrobiłam return w 73 linijce
+  const formatTime = time => String(time).padStart(2, '0');
+  daysElement.textContent = formatTime(days);
+  hoursElement.textContent = formatTime(hours);
+  minutesElement.textContent = formatTime(minutes);
+  secondsElement.textContent = formatTime(seconds);
+  updateTimerValue({ days, hours, minutes, seconds });
+}
 
-userSelectedDate = flatpickr('#datetime-picker', {
-  enableTime: true,
-  dateFormat: 'Y-m-d H:i',
-  onChange: function (selectedDates, dateStr) {
-    console.log(`selectedDates `, selectedDates.toString());
-    console.log(`dateStr `, dateStr);
-
-    selectedDateTime = new Date(dateStr);
-    console.log(`selectedDateTime `, selectedDateTime);
-
-    selectedDateTimeMilis = selectedDateTime.getTime();
-    console.log({ selectedDateTimeMilis });
-    const deltaTime = selectedDateTime - startDate;
-    console.log(`Miliseconds UNIX period of time`, { deltaTime });
-    console.log(`Period of time`, convertMs(deltaTime));
-  },
-});
-
-// // --------------- ALERT
-// iziToast.show({
-//   message: 'Please choose a date in the future',
-//   color: '#ef4040',
-//   messageColor: `white`,
-//   position: 'topRight',
-//   timeout: 8000,
-// });
-
-// const checkDate =
-//   selectedTime > 0 === true ? convertMs(deltaTime) : iziToast.show;
-
-// console.log(checkDate);
-
-// const addLeadingZero = value => {
-//   [padStart()];
-//   // (< `https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart` >)
-// };
-
-startBtn.addEventListener(`click`, () => {});
-
-const formatTime = time => time.toString().padStart(2, '0');
-
-daysElement.textContent = formatTime(actualDate.getDay());
-hoursElement.textContent = formatTime(actualDate.getHours());
-minutesElement.textContent = formatTime(actualDate.getHours());
-secondsElement.textContent = formatTime(actualDate.getHours());
-
-inputField.addEventListener('click', () => {
-  userSelectedDate.open;
-  // selectedTime = userSelectedDate.value;
-});
+startBtn.addEventListener('click', startTimer);
