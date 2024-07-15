@@ -30,26 +30,28 @@ body {
   line-height: 1.2;
 }
 
-.input-field {
+#datetime-picker {
   border-radius: 4px;
   border: 1px solid #808080;
   width: 272px;
   height: 40px;
-  background: #f5f5f5;
+  background-color: #fff;
   font: inherit;
   padding: 8px 16px 8px 16px;
 }
 
-.input-field:hover {
-  border: #000;
+#datetime-picker:hover {
+  border: 1px solid #000;
 }
 
-.input-field:active {
-  border: #4e75ff;
+#datetime-picker:active,
+#datetime-picker:focus,
+#datetime-picker.active {
+  border: 1px solid #4e75ff;
 }
 
-.input-field:disabled {
-  border: #808080;
+#datetime-picker:disabled {
+  border: 1px solid #808080;
   background-color: #fafafa;
 }
 
@@ -76,4 +78,8 @@ body {
 .start-btn:disabled {
   background-color: #cfcfcf;
   color: #989898;
+}
+
+.flatpickr-calendar {
+  background-color: #f5f5f5;
 }
